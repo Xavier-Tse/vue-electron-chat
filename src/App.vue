@@ -22,13 +22,14 @@
       </div>
     </div>
     <div class=" h-full flex-1">
-      content
+      <ProviderSelect />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import ConversationList from './components/ConversationList.vue';
+import ProviderSelect from './components/ProviderSelect.vue';
 import { ConversationProps } from './types'
 import { Icon } from '@iconify/vue'
 
