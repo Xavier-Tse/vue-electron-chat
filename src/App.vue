@@ -33,14 +33,8 @@
 
 <script setup lang="ts">
 import ConversationList from './components/ConversationList.vue';
-import { ConversationProps, ProviderProps } from './types'
-import { Icon } from '@iconify/vue'
-
-const items: ConversationProps[] = [
-  { id: 1, selectedModel: 'GPT-3.5-Turbo', title: '标题', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },
-  { id: 2, selectedModel: 'GPT-3.5-Turbo', title: '标题2', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },
-  { id: 3, selectedModel: 'GPT-3.5-Turbo', title: '标题3', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },
-]
+import { Icon } from '@iconify/vue';
+import { items } from './testData';
 
 console.log('👋 This message is being logged by "renderer.ts", included via Vite')
 </script>
