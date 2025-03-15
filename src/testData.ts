@@ -35,7 +35,7 @@ export const providers: ProviderProps[] = [
   }
 ]
 
-export const items: ConversationProps[] = [
+export const conversations: ConversationProps[] = [
   { id: 1, selectedModel: 'GPT-3.5-Turbo', title: '标题', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },
   { id: 2, selectedModel: 'GPT-3.5-Turbo', title: '标题2', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },
   { id: 3, selectedModel: 'GPT-3.5-Turbo', title: '标题3', createdAt: '2021-01-01', updatedAt: '2021-01-01', providerId: 1 },

@@ -2,7 +2,7 @@
   <div class=" flex items-center justify-between h-screen">
     <div class=" w-[300px] bg-gray-200 h-full border-r border-gray-300">
       <div class=" h-[90%] overflow-y-auto">
-        <ConversationList :items="items" />
+        <ConversationList :items="conversations" />
       </div>
       <div class=" h-[10%] grid grid-cols-2 gap-2 p-2">
         <RouterLink to="/">
@@ -34,7 +34,7 @@
 <script setup lang="ts">
 import ConversationList from './components/ConversationList.vue';
 import { Icon } from '@iconify/vue';
-import { items } from './testData';
+import { conversations } from './testData';
 
 console.log('👋 This message is being logged by "renderer.ts", included via Vite')
 </script>
