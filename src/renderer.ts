@@ -36,7 +36,7 @@ import { createMemoryHistory, createRouter } from 'vue-router';
 
 const routes = [
   { path: '/', component: Home },
-  { path: '/conversation', component: Conversaton },
+  { path: '/conversation/:id', component: Conversaton },
   { path: '/settings', component: Settings },
 ]
 const router = createRouter({
