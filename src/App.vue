@@ -27,7 +27,7 @@
           <ProviderSelect :items="providers" v-model="selectedModel" />
         </div>
         <div class="flex items-center h-[15%]">
-          message input
+          <MessageInput />
         </div>
       </div>
     </div>
@@ -40,6 +40,7 @@ import ConversationList from './components/ConversationList.vue';
 import ProviderSelect from './components/ProviderSelect.vue';
 import { ConversationProps, ProviderProps } from './types'
 import { Icon } from '@iconify/vue'
+import MessageInput from './components/MessageInput.vue';
 
 const selectedModel = ref('')
 
