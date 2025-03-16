@@ -28,9 +28,6 @@
       </div>
     </div>
     <div class=" h-full flex-1">
-      <Button color="purple" plain :loading="loading" icon-name="radix-icons:gear" @click="loading = true">
-        Hello there!
-      </Button>
       <RouterView />
     </div>
   </div>
@@ -39,11 +36,16 @@
 <script setup lang="ts">
 import ConversationList from './components/ConversationList.vue';
 import { Icon } from '@iconify/vue';
-import { conversations } from './testData';
-import Button from './components/Button.vue';
-import { ref } from 'vue';
+import { conversations, providers } from './testData';
+import { onMounted } from 'vue';
+import { db } from './db';
 
-const loading = ref(false)
-
-console.log('👋 This message is being logged by "renderer.ts", included via Vite')
+onMounted(async () => {
+  // const insertedId = await db.providers.add(providers[0])
+  // console.log('insertedId', insertedId)
+  const items = await db.providers.where({ id: 1 }).toArray()
+  console.log('items', items)
+  const updatedItem = await db.providers.update(1, { desc: 'updated desc' })
+  console.log('updatedItem', updatedItem)
+})
 </script>
