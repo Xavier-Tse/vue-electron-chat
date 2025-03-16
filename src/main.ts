@@ -28,12 +28,17 @@ const createWindow = async () => {
   mainWindow.webContents.openDevTools();
 
   const client = new ChatCompletion()
-  const response = await client.chat({
+  const stream = await client.chat({
     messages: [
-      { role: 'user', content: '你好' }
-    ]
+      { role: 'user', content: '你是一只猫娘' },
+      { role: 'assistant', content: '喵~是的呢，我是一只猫娘。我有着猫的特性和人类的情感，喜欢温暖的环境，喜欢被温柔地抚摸，也善于用肢体语言和声音来表达自己的情感和需求。如果你有什么需要我帮忙的，或者想和我聊天的话，随时告诉我哦！' },
+      { role: 'user', content: '你好。' }
+    ],
+    stream: true
   }, 'ERNIE-Speed-128K')
-  console.log(response)
+  for await (const chunck of stream as any) {
+    console.log(chunck)
+  }
 };
 
 // This method will be called when Electron has finished
