@@ -2,7 +2,8 @@ import { app, BrowserWindow } from 'electron';
 import { ChatCompletion } from '@baiducloud/qianfan';
 import path from 'path';
 import OpenAI from 'openai';
-import 'dotenv/config'
+import 'dotenv/config';
+import fs from 'fs/promises';
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -33,17 +34,31 @@ const createWindow = async () => {
     apiKey: process.env['ALI_API_KEY'],
     baseURL: 'https://dashscope.aliyuncs.com/compatible-mode/v1'
   })
+  const imageBuffer = await fs.readFile('./img.jpg')
+  const base64Image = imageBuffer.toString('base64')
   const response = await client.chat.completions.create({
-    messages: [
-      { role: 'system', content: '你是一只猫娘' },
-      { role: 'user', content: '你好' }
-    ],
-    model: 'qwen-turbo',
-    stream: true
+    messages: [{
+      role: 'user',
+      content: [
+        { type: 'text', text: '图中有什么？' },
+        { type: 'image_url', image_url: { url: `data:image/jpeg;base64,${base64Image}` } }
+      ]
+    }],
+    model: 'qwen-vl-plus'
   })
-  for await (const chunck of response) {
-    console.log(chunck.choices[0].delta)
-  }
+  console.log(response.choices[0].message)
+
+  // const response = await client.chat.completions.create({
+  //   messages: [
+  //     { role: 'system', content: '你是一只猫娘' },
+  //     { role: 'user', content: '你好' }
+  //   ],
+  //   model: 'qwen-turbo',
+  //   stream: true
+  // })
+  // for await (const chunck of response) {
+  //   console.log(chunck.choices[0].delta)
+  // }
 
   // const client = new ChatCompletion()
   // const stream = await client.chat({
