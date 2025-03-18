@@ -29,6 +29,7 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import './index.css';
+import 'highlight.js/styles/github-dark.min.css';
 import Home from './views/Home.vue';
 import Conversaton from './views/Conversaton.vue';
 import Settings from './views/Settings.vue';
