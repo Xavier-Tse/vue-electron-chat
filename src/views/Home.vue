@@ -4,28 +4,25 @@
       <ProviderSelect :items="providers" v-model="currentProvider" />
     </div>
     <div class="flex items-center h-[15%]">
-      <MessageInput @create="createConversation" />
+      <MessageInput @create="createConversation" :disabled="currentProvider === ''" />
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue';
+import { computed, ref } from 'vue';
 import MessageInput from '../components/MessageInput.vue';
 import ProviderSelect from '../components/ProviderSelect.vue';
-import { ProviderProps } from '../types';
 import { db } from '../db';
 import { useRouter } from 'vue-router';
 import { useConversationStore } from '../stores/conversation';
+import { useProviderStore } from '../stores/provider';
 
 const currentProvider = ref('')
-const providers = ref<ProviderProps[]>([])
 const router = useRouter()
 const conversationStore = useConversationStore()
-
-onMounted(async () => {
-  providers.value = await db.providers.toArray()
-})
+const providerStore = useProviderStore()
+const providers = computed(() => providerStore.items)
 
 const modelInfo = computed(() => {
   const [ providerId, selectedModel ] = currentProvider.value.split('/')
@@ -52,6 +49,7 @@ const createConversation = async (question: string) => {
     updatedAt: currentDate,
     type: 'question'
   })
+  conversationStore.selectedId = conversationId
   router.push(`/conversation/${conversationId}?init=${newMessageId}`)
 }
 </script>

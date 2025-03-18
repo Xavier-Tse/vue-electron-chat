@@ -31,13 +31,16 @@ import { db, initProviders } from './db';
 import { useConversationStore } from './stores/conversation';
 import { conversations } from './testData';
 import Button from './components/Button.vue';
+import { useProviderStore } from './stores/provider';
 
 const conversationStore = useConversationStore()
+const providerStore = useProviderStore()
 const items = computed(() => conversationStore.items)
 
 onMounted(async () => {
   await initProviders()
   conversationStore.fetchConversations()
+  providerStore.fetchProviders()
 })
 
 let index = 0

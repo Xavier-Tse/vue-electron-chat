@@ -7,7 +7,7 @@
     <MessageList :messages="filteredMessages" />
   </div>
   <div class="w-[80%] mx-auto h-[15%] flex items-center">
-    <MessageInput @create="sendNewMessage" v-model="inputValue" />
+    <MessageInput @create="sendNewMessage" v-model="inputValue" :disabled="messageStore.isMessageLoading" />
   </div>
 </template>
 
@@ -15,21 +15,21 @@
 import { useRoute } from 'vue-router';
 import MessageInput from '../components/MessageInput.vue';
 import MessageList from '../components/MessageList.vue';
-import { MessageProps, MessageStatus } from '../types';
+import { MessageProps } from '../types';
 import { computed, onMounted, ref, watch } from 'vue';
-import { db } from '../db';
 import { useConversationStore } from '../stores/conversation';
 import { useMessageStore } from '../stores/message';
+import { useProviderStore } from '../stores/provider';
 
 const route = useRoute()
 let conversationId = ref(parseInt(route.params.id as string))
 const inputValue = ref('')
 const conversationStore = useConversationStore()
 const messageStore = useMessageStore()
+const providerStore = useProviderStore()
 const conversation = computed(() => conversationStore.getConversationById(conversationId.value))
 const initMessageId = parseInt(route.query.init as string)
 const filteredMessages = computed(() => messageStore.items)
-const lastQuestion = computed(() => messageStore.getLastQuestion(conversationId.value))
 const sendedMessages = computed(() => filteredMessages.value
   .filter(message => message.status !== 'loading')
     .map(message => {
@@ -67,7 +67,7 @@ const creatingInitialMessage = async () => {
   }
   const newMessageId = await messageStore.createMessage(createdData)
   if (conversation.value) {
-    const provider = await db.providers.where({ id:conversation.value.providerId }).first()
+    const provider = providerStore.getProviderById(conversation.value.providerId)
     if (provider) {
       await window.electronAPI.startChat({
         messageId: newMessageId,
